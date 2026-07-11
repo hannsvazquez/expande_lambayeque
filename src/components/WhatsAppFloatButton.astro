@@ -1,0 +1,14 @@
+---
+import { MessageCircle } from '@lucide/astro';
+import { contact } from '../data/contact';
+---
+
+<a
+  href={contact.whatsappCamila.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Conversar por WhatsApp con Camila"
+  class="btn btn-circle btn-success fixed bottom-6 right-6 z-40 size-14 shadow-lg hover:scale-105 transition-transform"
+>
+  <MessageCircle class="size-7" />
+</a>

@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import { Menu } from '@lucide/astro';
+import logo from '../../Photos_Expande/Logo-Expande-Lambayeque.png';
+import { contact } from '../data/contact';
+
+const links = [
+  { label: 'Inicio', href: '#inicio' },
+  { label: 'Nosotros', href: '#nosotros' },
+  { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Oficina', href: '#oficina' },
+  { label: 'Asistente Virtual', href: '#camila' },
+];
+---
+
+<header class="navbar sticky top-0 z-50 bg-base-100/95 backdrop-blur border-b border-base-300 px-6 md:px-8">
+  <div class="navbar-start">
+    <a href="#inicio" class="flex items-center gap-2">
+      <Image src={logo} alt="Expande Inmobiliaria" width={160} height={48} class="h-10 w-auto md:h-12" />
+    </a>
+  </div>
+
+  <nav class="navbar-center hidden lg:flex">
+    <ul class="flex items-center gap-8 font-body text-sm font-medium tracking-wide text-base-content">
+      {links.map((link) => (
+        <li><a href={link.href} class="hover:text-primary transition-colors uppercase">{link.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="navbar-end gap-2">
+    <a href={contact.whatsappCamila.url} target="_blank" rel="noopener noreferrer" class="btn btn-primary hidden sm:inline-flex">
+      Contáctanos
+    </a>
+    <div class="dropdown dropdown-end lg:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Abrir menú">
+        <Menu class="size-6" />
+      </div>
+      <ul tabindex="0" class="menu dropdown-content mt-3 w-56 rounded-box bg-base-100 p-2 shadow-lg border border-base-300">
+        {links.map((link) => (
+          <li><a href={link.href} class="uppercase text-sm font-medium">{link.label}</a></li>
+        ))}
+        <li class="mt-2">
+          <a href={contact.whatsappCamila.url} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+            Contáctanos
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

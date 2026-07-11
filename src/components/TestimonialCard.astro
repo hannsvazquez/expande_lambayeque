@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import { Star } from '@lucide/astro';
+import type { Testimonial } from '../data/testimonials';
+
+interface Props {
+  testimonial: Testimonial;
+  image: ImageMetadata | null;
+}
+
+const { testimonial, image } = Astro.props;
+const initials = testimonial.name
+  .split(' ')
+  .map((part) => part[0])
+  .join('')
+  .slice(0, 2);
+---
+
+<article class="flex h-full flex-col gap-4 rounded-box bg-base-100 p-6 shadow-sm md:p-8">
+  <div class="flex gap-0.5 text-warning">
+    {Array.from({ length: testimonial.rating }).map(() => (
+      <Star class="size-4" fill="currentColor" />
+    ))}
+  </div>
+  <p class="flex-1 font-body text-sm text-base-content/75 md:text-base">&ldquo;{testimonial.quote}&rdquo;</p>
+  <div class="flex items-center gap-3">
+    {image ? (
+      <Image src={image} alt={testimonial.name} width={48} height={48} class="size-12 flex-none rounded-full object-cover" />
+    ) : (
+      <span class="flex size-12 flex-none items-center justify-center rounded-full bg-secondary font-heading text-sm font-medium text-white">
+        {initials}
+      </span>
+    )}
+    <div>
+      <p class="font-heading text-sm font-medium text-secondary">{testimonial.name}</p>
+      <p class="font-body text-xs text-base-content/75">{testimonial.role}</p>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,115 @@
+---
+import { Image } from 'astro:assets';
+import launchImage from '../../Photos_Expande/Foto-del-proyecto-02.jpeg';
+import promoImage from '../../Photos_Expande/3.jpg';
+import brandImage from '../../Photos_Expande/DSC06849.jpg';
+import { contact } from '../data/contact';
+import { stats } from '../data/projects';
+
+const slides = [
+  {
+    image: launchImage,
+    badge: 'Nuevo lanzamiento · 12 de julio 2026',
+    title: 'Expande de Lambayeque II',
+    text: 'La continuación de nuestro proyecto más exitoso. Lotes estratégicos a 5 min de la nueva Autopista El Sol, con gran potencial de revalorización.',
+    ctaLabel: 'Ver proyecto',
+    ctaHref: '#proyectos',
+  },
+  {
+    image: promoImage,
+    badge: 'Promoción de lanzamiento',
+    title: 'Separa tu lote desde S/. 40',
+    text: 'Lotes desde 90m² hasta 359m², registrados en SUNARP y con grandes facilidades de pago.',
+    ctaLabel: 'Conocer más',
+    ctaHref: '#camila',
+  },
+  {
+    image: brandImage,
+    badge: 'Desde 2015',
+    title: 'Un buen lugar para vivir mejor',
+    text: 'Más de 10 años acompañando a familias e inversionistas en la región Lambayeque.',
+    ctaLabel: 'Conocer a Expande',
+    ctaHref: '#nosotros',
+  },
+];
+---
+
+<section id="inicio" class="relative">
+  <div class="swiper hero-swiper">
+    <div class="swiper-wrapper">
+      {slides.map((slide) => (
+        <div class="swiper-slide relative h-[36rem] md:h-[42rem]">
+          <Image
+            src={slide.image}
+            alt={slide.title}
+            width={1600}
+            height={900}
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/50 to-secondary/20"></div>
+          <div class="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center gap-4 px-6 md:px-8">
+            <span class="badge badge-warning w-fit font-body text-xs font-medium uppercase tracking-wide">
+              {slide.badge}
+            </span>
+            <h1 class="max-w-2xl font-heading text-4xl font-semibold text-white md:text-5xl">
+              {slide.title}
+            </h1>
+            <p class="max-w-xl font-body text-base text-white/90 md:text-lg">
+              {slide.text}
+            </p>
+            <div class="mt-2 flex flex-wrap gap-3">
+              <a href={slide.ctaHref} class="btn btn-primary">{slide.ctaLabel}</a>
+              <a href={contact.whatsappCamila.url} target="_blank" rel="noopener noreferrer" class="btn btn-outline border-white text-white hover:bg-white hover:text-secondary">
+                Conversar con Camila
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+
+  <div class="relative z-10 mx-auto -mt-1 grid max-w-7xl grid-cols-3 divide-x divide-base-300 bg-base-100 px-6 py-8 md:px-8 md:py-10">
+    {stats.map((stat) => (
+      <div class="flex flex-col items-center gap-1 text-center">
+        <span class="font-heading text-3xl font-semibold text-secondary md:text-4xl">{stat.value}</span>
+        <span class="font-body text-xs text-base-content/75 md:text-sm">{stat.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .hero-swiper :global(.swiper-pagination-bullet) {
+    background: white;
+    opacity: 0.6;
+  }
+  .hero-swiper :global(.swiper-pagination-bullet-active) {
+    opacity: 1;
+    background: var(--color-accent);
+  }
+  .hero-swiper :global(.swiper-button-prev),
+  .hero-swiper :global(.swiper-button-next) {
+    color: white;
+  }
+</style>
+
+<script>
+  import { Swiper } from 'swiper';
+  import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/navigation';
+  import 'swiper/css/pagination';
+
+  new Swiper('.hero-swiper', {
+    modules: [Autoplay, Navigation, Pagination],
+    loop: true,
+    autoplay: { delay: 6000, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+  });
+</script>

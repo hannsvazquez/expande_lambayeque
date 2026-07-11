@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import { Camera } from '@lucide/astro';
+import { contact } from '../data/contact';
+
+import img1 from '../../Photos_Expande/foto-del-proyecto-01.jpeg';
+import img2 from '../../Photos_Expande/foto-proyecto-I-angulo-02.jpeg';
+import img3 from '../../Photos_Expande/refugio_sol_luna.webp';
+import img4 from '../../Photos_Expande/villa-del-sol.webp';
+import img5 from '../../Photos_Expande/instalacion-de-luz.jpeg';
+import img6 from '../../Photos_Expande/foto-proyecto-I-angulo-03.jpeg';
+
+const photos = [
+  { src: img1, alt: 'Avenidas y áreas verdes — Expande de Lambayeque I', span: 'md:row-span-2' },
+  { src: img2, alt: 'Vista del proyecto Expande de Lambayeque I', span: '' },
+  { src: img3, alt: 'Refugio Sol y Luna', span: '' },
+  { src: img4, alt: 'Villa del Sol', span: '' },
+  { src: img5, alt: 'Instalación de servicios — luz', span: '' },
+  { src: img6, alt: 'Urb. SINAI', span: 'md:row-span-2' },
+];
+---
+
+<section class="bg-base-200 py-16 md:py-24 lg:py-32">
+  <div class="mx-auto max-w-7xl px-6 md:px-8">
+    <div class="mb-12 flex flex-col items-start justify-between gap-6 md:mb-16 md:flex-row md:items-end">
+      <div class="flex flex-col gap-4 md:max-w-xl">
+        <span class="badge badge-outline badge-primary w-fit font-body text-xs uppercase tracking-wide">Galería</span>
+        <h2 class="font-heading text-3xl font-semibold text-secondary md:text-4xl">
+          Conoce nuestros proyectos
+        </h2>
+        <p class="font-body text-base text-base-content/75 md:text-lg">
+          Avenidas, áreas verdes y servicios instalados: así avanzan nuestros proyectos en Lambayeque y Chiclayo.
+        </p>
+      </div>
+      <a href={contact.whatsappCamila.url} target="_blank" rel="noopener noreferrer" class="btn btn-primary flex-none">
+        <Camera class="size-5" />
+        Programa tu visita
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:auto-rows-[12rem] md:gap-6">
+      {photos.map((photo) => (
+        <div class={`overflow-hidden rounded-box ${photo.span}`}>
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            width={600}
+            height={600}
+            class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

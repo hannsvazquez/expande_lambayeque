@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@import "@fontsource-variable/alexandria";
+@import "@fontsource/roboto/400.css";
+@import "@fontsource/roboto/500.css";
+@import "@fontsource/roboto/700.css";
+
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "expande";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: #FEFDFC;
+  --color-base-200: #EFF2F2;
+  --color-base-300: #E2E6E6;
+  --color-base-content: #101A2C;
+  --color-primary: #0067DD;
+  --color-primary-content: #FEFDFC;
+  --color-secondary: #042C57;
+  --color-secondary-content: #FEFDFC;
+  --color-accent: #FDE36D;
+  --color-accent-content: #101A2C;
+  --color-neutral: #101A2C;
+  --color-neutral-content: #FEFDFC;
+  --color-info: #0067DD;
+  --color-info-content: #FEFDFC;
+  --color-success: #07AF2D;
+  --color-success-content: #FEFDFC;
+  --color-warning: #FDE36D;
+  --color-warning-content: #101A2C;
+  --color-error: #DC2626;
+  --color-error-content: #FEFDFC;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  --font-heading: "Alexandria Variable", sans-serif;
+  --font-body: "Roboto", sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
