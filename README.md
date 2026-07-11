@@ -2,8 +2,6 @@
 
 Marketing landing page for **Expande Inmobiliaria**, a real estate company in Lambayeque/Chiclayo, Peru. Built for Meta Ads (Facebook/Instagram) campaigns driving traffic to `expandeinmobiliaria.com`, showcasing the company's lotización projects and connecting visitors with the virtual assistant Camila via WhatsApp.
 
-Linear issue: [CMD-229](https://linear.app/brandlift-ai/issue/CMD-229/landing-page-expande)
-
 ## Getting started
 
 ```bash
@@ -18,13 +16,13 @@ npm run preview  # preview the production build locally
 Single page (`src/pages/index.astro`), composed of 8 sections in order:
 
 1. **Hero** — Swiper slider (launch, promotion, and brand slides) with a stats row (+10 años, +100 lotes vendidos, 5 proyectos)
-2. **Sobre Expande** — company overview, founding stats, and feature highlights
-3. **Proyectos** — vertical timeline of the 5 projects with "Ver en Google Maps" links
-4. **Testimonios** — client testimonial cards
-5. **Vista del proyecto en 3D** — lazy-loaded YouTube facade (click-to-play)
+2. **About Expande** — company overview, founding stats, and feature highlights
+3. **Lastest projects** — vertical timeline of the 5 projects with "Ver en Google Maps" links
+4. **Testimonials** — client testimonial cards
+5. **3D render of the project** — lazy-loaded YouTube facade (click-to-play)
 6. **CTA Camila** — WhatsApp call-to-action with a chat preview mockup
-7. **Galería** — photo grid with a "Programa tu visita" CTA
-8. **Preguntas frecuentes** — accordion FAQ
+7. **Gallery** — photo grid with a "Programa tu visita" CTA
+8. **FAQ** — accordion FAQ
 
 Plus a sticky **Navigation**, a **Footer** (contact, socials, hours, map links), and a persistent **floating WhatsApp button**.
 
