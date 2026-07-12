@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import { MapPin, Mail, Phone } from '@lucide/astro';
-import logo from '../../Photos_Expande/Logo-Expande-Lambayeque.png';
+import Logo from './Logo.astro';
 import { contact } from '../data/contact';
 import { projects } from '../data/projects';
 
@@ -12,7 +11,7 @@ const year = new Date().getFullYear();
   <div class="mx-auto max-w-7xl px-6 py-16 md:px-8 md:py-24">
     <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
       <div>
-        <Image src={logo} alt="Expande Inmobiliaria" width={160} height={48} class="h-12 w-auto brightness-0 invert" />
+        <Logo class="h-12 w-auto" inverted />
         <p class="mt-4 font-body text-sm text-white/75">Invierte seguro con Expande Inmobiliaria.</p>
         <div class="mt-6 flex gap-3">
           <a

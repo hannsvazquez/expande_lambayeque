@@ -73,6 +73,6 @@ export const projects: Project[] = [
 
 export const stats = [
   { label: 'años en el mercado', value: '+10' },
-  { label: 'lotes vendidos', value: '+100' },
-  { label: 'proyectos', value: '5' },
+  { label: 'lotes vendidos', value: '+1 mil' },
+  { label: 'proyectos', value: '+5' },
 ];

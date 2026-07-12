@@ -1,6 +1,8 @@
 ---
 import TestimonialCard from './TestimonialCard.astro';
 import { testimonials } from '../data/testimonials';
+import { Image } from 'astro:assets';
+import { Star } from '@lucide/astro';
 
 const images = import.meta.glob<{ default: ImageMetadata }>('../../Photos_Expande/*.{jpg,jpeg,png,webp,JPG,JPEG}', {
   eager: true,
@@ -8,24 +10,72 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../Photos_Expand
 const imageMap = Object.fromEntries(
   Object.entries(images).map(([path, mod]) => [path.split('/').pop() as string, mod.default])
 );
+
+const featured = testimonials[0];
+const featuredImage = featured.image ? imageMap[featured.image] : null;
+const regularTestimonials = testimonials.slice(1);
 ---
 
 <section class="bg-base-100 py-16 md:py-24 lg:py-32">
   <div class="mx-auto max-w-7xl px-6 md:px-8">
-    <div class="mb-12 flex flex-col gap-4 md:mb-16 md:max-w-2xl">
-      <span class="badge badge-outline badge-primary w-fit font-body text-xs uppercase tracking-wide">Testimonios</span>
-      <h2 class="font-heading text-3xl font-semibold text-secondary md:text-4xl">
-        Invierte seguro con Expande Inmobiliaria
-      </h2>
-      <p class="font-body text-base text-base-content/75 md:text-lg">
+    <!-- Header: title left, description right -->
+    <div class="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
+      <div class="flex flex-col gap-4 md:max-w-lg">
+        <span class="flex items-center gap-3 font-body text-xs font-semibold uppercase tracking-wide text-primary">
+          <span class="inline-block h-0.5 w-8 bg-primary"></span>
+          Testimonios
+        </span>
+        <h2 class="font-heading text-3xl font-semibold text-secondary md:text-4xl">
+          Invierte seguro con Expande Inmobiliaria
+        </h2>
+      </div>
+      <p class="font-body text-base text-base-content/75 md:max-w-sm md:text-right md:text-lg">
         Más de 100 familias ya invirtieron en su futuro con nosotros. Estas son algunas de sus experiencias.
       </p>
     </div>
 
-    <div class="grid gap-6 md:grid-cols-3 md:gap-8">
-      {testimonials.map((testimonial) => (
-        <TestimonialCard testimonial={testimonial} image={testimonial.image ? imageMap[testimonial.image] : null} />
-      ))}
+    <!-- Testimonials grid: featured left, 2 stacked right -->
+    <div class="grid gap-6 md:grid-cols-2 md:gap-8">
+      <!-- Featured testimonial card -->
+      <article class="flex flex-col overflow-hidden rounded-box bg-base-100 shadow-sm md:flex-row">
+        {featuredImage && (
+          <div class="relative md:w-2/5">
+            <Image
+              src={featuredImage}
+              alt={featured.name}
+              width={400}
+              height={500}
+              class="h-64 w-full object-cover md:h-full"
+            />
+          </div>
+        )}
+        <div class="flex flex-1 flex-col justify-between gap-4 p-6 md:p-8">
+          <div class="flex flex-col gap-4">
+            <span class="font-heading text-4xl leading-none text-primary">&ldquo;</span>
+            <p class="font-heading text-lg font-semibold leading-relaxed text-secondary md:text-xl">
+              {featured.quote}
+            </p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <div class="flex gap-0.5 text-warning">
+              {Array.from({ length: featured.rating }).map(() => (
+                <Star class="size-4" fill="currentColor" />
+              ))}
+            </div>
+            <div>
+              <p class="font-heading text-base font-semibold text-secondary">{featured.name}</p>
+              <p class="font-body text-sm text-base-content/75">{featured.role}</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Right column: 2 stacked cards -->
+      <div class="flex flex-col gap-6 md:gap-8">
+        {regularTestimonials.map((testimonial) => (
+          <TestimonialCard testimonial={testimonial} image={null} />
+        ))}
+      </div>
     </div>
   </div>
 </section>

@@ -1,79 +1,131 @@
 ---
 import { Image } from 'astro:assets';
-import launchImage from '../../Photos_Expande/Foto-del-proyecto-02.jpeg';
-import promoImage from '../../Photos_Expande/3.jpg';
+import droneImage from '../../Photos_Expande/Foto-con-dron-terrenos.jpg';
+import angleImage from '../../Photos_Expande/foto-proyecto-I-angulo-03.jpeg';
 import brandImage from '../../Photos_Expande/DSC06849.jpg';
 import { contact } from '../data/contact';
 import { stats } from '../data/projects';
 
 const slides = [
   {
-    image: launchImage,
+    image: droneImage,
     badge: 'Nuevo lanzamiento · 12 de julio 2026',
     title: 'Expande de Lambayeque II',
-    text: 'La continuación de nuestro proyecto más exitoso. Lotes estratégicos a 5 min de la nueva Autopista El Sol, con gran potencial de revalorización.',
-    ctaLabel: 'Ver proyecto',
-    ctaHref: '#proyectos',
+    text: 'La continuación de nuestro proyecto más exitoso. Encuentra tu lote ideal para construir tu casa o como segunda inversión en una zona estratégica de Lambayeque.',
   },
   {
-    image: promoImage,
+    image: angleImage,
     badge: 'Promoción de lanzamiento',
     title: 'Separa tu lote desde S/. 40',
-    text: 'Lotes desde 90m² hasta 359m², registrados en SUNARP y con grandes facilidades de pago.',
-    ctaLabel: 'Conocer más',
-    ctaHref: '#camila',
+    text: 'Lotes desde 90m² hasta 359m², registrados en SUNARP y con grandes facilidades de pago. Vive a 15 minutos  del centro de Lambayeque',
   },
   {
     image: brandImage,
     badge: 'Desde 2015',
     title: 'Un buen lugar para vivir mejor',
-    text: 'Más de 10 años acompañando a familias e inversionistas en la región Lambayeque.',
-    ctaLabel: 'Conocer a Expande',
-    ctaHref: '#nosotros',
+    text: 'Más de 10 años acompañando a familias en la compra de lotes para expansión urbana. El mejor momento para invertir en Lambayeque es hoy, que esperas!',
   },
 ];
 ---
 
 <section id="inicio" class="relative">
-  <div class="swiper hero-swiper">
-    <div class="swiper-wrapper">
-      {slides.map((slide) => (
-        <div class="swiper-slide relative h-[36rem] md:h-[42rem]">
-          <Image
-            src={slide.image}
-            alt={slide.title}
-            width={1600}
-            height={900}
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="eager"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/50 to-secondary/20"></div>
-          <div class="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center gap-4 px-6 md:px-8">
+  <div class="lg:grid lg:grid-cols-2">
+
+    <!-- LEFT: Text panel — desktop only -->
+    <div class="hidden lg:flex flex-col justify-center hero-left-panel px-12 xl:px-16 py-16">
+      <div class="flex flex-col justify-center flex-1 gap-6">
+        {slides.map((slide, i) => (
+          <div
+            class="hero-text-content flex flex-col gap-5"
+            data-index={i}
+            style={i !== 0 ? 'display:none' : undefined}
+          >
             <span class="badge badge-warning w-fit font-body text-xs font-medium uppercase tracking-wide">
               {slide.badge}
             </span>
-            <h1 class="max-w-2xl font-heading text-4xl font-semibold text-white md:text-5xl">
+            <h1 class="font-heading text-4xl font-semibold text-white xl:text-5xl">
               {slide.title}
             </h1>
-            <p class="max-w-xl font-body text-base text-white/90 md:text-lg">
+            <p class="font-body text-base text-white/85 xl:text-lg">
               {slide.text}
             </p>
-            <div class="mt-2 flex flex-wrap gap-3">
-              <a href={slide.ctaHref} class="btn btn-primary">{slide.ctaLabel}</a>
-              <a href={contact.whatsappCamila.url} target="_blank" rel="noopener noreferrer" class="btn btn-outline border-white text-white hover:bg-white hover:text-secondary">
-                Conversar con Camila
+            <div class="flex flex-wrap gap-3 mt-1">
+              <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+              <a
+                href={contact.whatsappDirect.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline border-white text-white hover:bg-white hover:text-secondary"
+              >
+                Agendar visita
               </a>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      <!-- Stats inside left panel (desktop) -->
+      <div class="grid grid-cols-3 gap-6 border-t border-white/20 pt-8 mt-4">
+        {stats.map((stat) => (
+          <div class="flex flex-col gap-1">
+            <span class="font-heading text-3xl font-semibold text-white xl:text-4xl">{stat.value}</span>
+            <span class="font-body text-xs uppercase tracking-wide text-white/50">{stat.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
+
+    <!-- RIGHT: Swiper — full width on mobile, right column on desktop -->
+    <div class="swiper hero-swiper h-[36rem] lg:h-[42rem] min-w-0 w-full overflow-hidden">
+      <div class="swiper-wrapper">
+        {slides.map((slide) => (
+          <div class="swiper-slide relative">
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              width={1600}
+              height={900}
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="eager"
+            />
+            <div class="absolute inset-0 hero-overlay lg:hidden"></div>
+
+            <!-- Mobile text overlay — hidden on desktop -->
+            <div class="relative z-10 lg:hidden mx-auto flex h-full max-w-7xl flex-col justify-center gap-4 px-6">
+              <span class="badge badge-warning w-fit font-body text-xs font-medium uppercase tracking-wide">
+                {slide.badge}
+              </span>
+              <h1 class="max-w-2xl font-heading text-4xl font-semibold text-white">
+                {slide.title}
+              </h1>
+              <p class="max-w-xl font-body text-base text-white/90">
+                {slide.text}
+              </p>
+              <div class="mt-2 flex flex-wrap gap-3">
+                <a href="#proyectos" class="btn btn-primary">Ver proyectos</a>
+                <a
+                  href={contact.whatsappDirect.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-outline border-white text-white hover:bg-white hover:text-secondary"
+                >
+                  Agendar visita
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
   </div>
 
-  <div class="relative z-10 mx-auto -mt-1 grid max-w-7xl grid-cols-3 divide-x divide-base-300 bg-base-100 px-6 py-8 md:px-8 md:py-10">
+  <!-- Stats bar — mobile only (on desktop, stats are inside left panel) -->
+  <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-3 divide-x divide-base-300 bg-base-100 px-6 py-8 md:px-8 md:py-10 lg:hidden">
     {stats.map((stat) => (
       <div class="flex flex-col items-center gap-1 text-center">
         <span class="font-heading text-3xl font-semibold text-secondary md:text-4xl">{stat.value}</span>
@@ -84,6 +136,19 @@ const slides = [
 </section>
 
 <style>
+  .hero-left-panel {
+    background: linear-gradient(to bottom, #0067DD, #042c57);
+  }
+  .hero-overlay {
+    background: linear-gradient(to bottom, rgba(0, 103, 221, 0.2), #042c57);
+  }
+  .hero-swiper :global(.swiper-wrapper) {
+    width: 100%;
+    height: 100%;
+  }
+  .hero-swiper :global(.swiper-slide) {
+    height: 100%;
+  }
   .hero-swiper :global(.swiper-pagination-bullet) {
     background: white;
     opacity: 0.6;
@@ -95,6 +160,14 @@ const slides = [
   .hero-swiper :global(.swiper-button-prev),
   .hero-swiper :global(.swiper-button-next) {
     color: white;
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-swiper :global(.swiper-button-prev),
+    .hero-swiper :global(.swiper-button-next) {
+      display: flex;
+    }
   }
 </style>
 
@@ -105,11 +178,24 @@ const slides = [
   import 'swiper/css/navigation';
   import 'swiper/css/pagination';
 
+  const textPanels = document.querySelectorAll<HTMLElement>('.hero-text-content');
+
+  function showTextPanel(index: number) {
+    textPanels.forEach((panel, i) => {
+      panel.style.display = i === index ? 'flex' : 'none';
+    });
+  }
+
   new Swiper('.hero-swiper', {
     modules: [Autoplay, Navigation, Pagination],
     loop: true,
     autoplay: { delay: 6000, disableOnInteraction: false },
     pagination: { el: '.swiper-pagination', clickable: true },
     navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    on: {
+      slideChange(swiper) {
+        showTextPanel(swiper.realIndex);
+      },
+    },
   });
 </script>

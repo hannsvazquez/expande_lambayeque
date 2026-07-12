@@ -28,7 +28,7 @@ export const testimonials: Testimonial[] = [
     name: 'Lucía Fernández',
     role: 'Propietaria · Cajamarca',
     quote:
-      'Elegí Expande por su trayectoria y no me equivoqué. Ubicación estratégica, precios justos y un terreno que vale más cada día.',
+      'Elegí Expande por su trayectoria y no me equivoqué. Ubicación estratégica, precios justos y un terreno que ya vale más que cuando lo compré.',
     rating: 5,
     image: null,
   },

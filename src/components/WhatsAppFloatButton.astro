@@ -1,14 +1,71 @@
 ---
-import { MessageCircle } from '@lucide/astro';
 import { contact } from '../data/contact';
+import camilaPhoto from '../../Photos_Expande/Camila-C.png';
 ---
 
-<a
-  href={contact.whatsappCamila.url}
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Conversar por WhatsApp con Camila"
-  class="btn btn-circle btn-success fixed bottom-6 right-6 z-40 size-14 shadow-lg hover:scale-105 transition-transform"
->
-  <MessageCircle class="size-7" />
-</a>
+<div id="whatsapp-widget" class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+  <!-- Pop-up message bubble -->
+  <div
+    id="camila-bubble"
+    class="opacity-0 translate-y-2 pointer-events-none transition-all duration-500 ease-out max-w-64"
+  >
+    <div class="bg-white rounded-2xl rounded-br-sm shadow-xl p-4 relative">
+      <button
+        id="close-bubble"
+        class="absolute -top-2 -right-2 btn btn-circle btn-xs btn-ghost bg-base-200 hover:bg-base-300 text-base-content"
+        aria-label="Cerrar mensaje"
+      >&times;</button>
+      <p class="text-sm text-base-content leading-relaxed">
+        Hola! Soy <strong>Camila</strong>. Puedo ayudarte con alguna informacion?
+      </p>
+    </div>
+  </div>
+
+  <!-- WhatsApp button with Camila photo -->
+  <a
+    href={contact.whatsappCamila.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Conversar por WhatsApp con Camila"
+    class="relative block size-16 rounded-full bg-success p-[3px] shadow-lg hover:scale-105 transition-transform cursor-pointer"
+  >
+    <img
+      src={camilaPhoto.src}
+      alt="Camila — Asistente virtual de Expande"
+      class="size-full rounded-full object-cover"
+      loading="lazy"
+    />
+  </a>
+</div>
+
+<script>
+  let bubbleShown = false;
+  let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+  const DELAY_MS = 60_000; // 1 minute
+
+  function showBubble() {
+    const bubble = document.getElementById('camila-bubble');
+    if (!bubble || bubbleShown) return;
+    bubbleShown = true;
+    bubble.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+    bubble.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+  }
+
+  function startTimer() {
+    if (bubbleShown || scrollTimeout) return;
+    scrollTimeout = setTimeout(showBubble, DELAY_MS);
+  }
+
+  // Start the timer on first scroll
+  window.addEventListener('scroll', startTimer, { once: true });
+
+  // Close button
+  document.getElementById('close-bubble')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const bubble = document.getElementById('camila-bubble');
+    if (bubble) {
+      bubble.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+      bubble.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    }
+  });
+</script>

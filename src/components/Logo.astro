@@ -1,0 +1,47 @@
+---
+interface Props {
+  class?: string;
+  inverted?: boolean;
+}
+
+const { class: className = '', inverted = false } = Astro.props;
+const textColor = inverted ? '#ffffff' : '#1a1a2e';
+const subtextColor = inverted ? 'rgba(255,255,255,0.75)' : '#4a4a5a';
+---
+
+<svg
+  viewBox="0 0 280 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class={className}
+  aria-label="Expande Inmobiliaria S.A.C."
+  role="img"
+>
+  <!-- Bar chart icon -->
+  <rect x="0" y="38" width="10" height="18" rx="1.5" fill="#F5C518" />
+  <rect x="13" y="28" width="10" height="28" rx="1.5" fill="#E63946" />
+  <rect x="26" y="16" width="10" height="40" rx="1.5" fill="#2563EB" />
+  <rect x="39" y="4" width="10" height="52" rx="1.5" fill={textColor} />
+
+  <!-- EXPANDE -->
+  <text
+    x="60"
+    y="32"
+    font-family="'Inter', 'Helvetica Neue', Arial, sans-serif"
+    font-size="28"
+    font-weight="800"
+    letter-spacing="2"
+    fill={textColor}
+  >EXPANDE</text>
+
+  <!-- INMOBILIARIA S.A.C. -->
+  <text
+    x="60"
+    y="50"
+    font-family="'Inter', 'Helvetica Neue', Arial, sans-serif"
+    font-size="13"
+    font-weight="400"
+    letter-spacing="3"
+    fill={subtextColor}
+  >INMOBILIARIA S.A.C.</text>
+</svg>

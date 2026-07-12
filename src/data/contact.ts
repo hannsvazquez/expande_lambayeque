@@ -9,6 +9,11 @@ export const contact = {
     number: '51903085217',
     url: 'tel:+51903085217',
   },
+  whatsappDirect: {
+    label: '+51 903 085 217',
+    number: '51903085217',
+    url: 'https://wa.me/51903085217',
+  },
   email: 'expandeinmobilaria2015@gmail.com',
   social: {
     facebook: 'https://www.facebook.com/ExpandeInmobiliariacix',
