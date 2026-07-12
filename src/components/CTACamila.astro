@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { MessageCircle, Zap } from '@lucide/astro';
 import { contact } from '../data/contact';
+import phoneMockup from '../../Photos_Expande/Mockuuups-iPhone-17.png';
 ---
 
 <section id="camila" class="bg-secondary py-16 md:py-24 lg:py-32">
@@ -28,8 +30,8 @@ import { contact } from '../data/contact';
     </div>
 
     <div class="mx-auto max-w-xs md:max-w-sm">
-      <img
-        src="/Photos_Expande/Mockuuups-iPhone-17.png"
+      <Image
+        src={phoneMockup}
         alt="Conversación con Camila, asistente virtual de Expande Inmobiliaria"
         class="w-full h-auto drop-shadow-2xl"
         loading="lazy"
