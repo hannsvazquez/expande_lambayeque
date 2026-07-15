@@ -1,6 +1,21 @@
 ---
 import { faq } from '../data/faq';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
 
 <section class="bg-base-100 py-16 md:py-24 lg:py-32">
   <div class="mx-auto max-w-4xl px-6 md:px-8">

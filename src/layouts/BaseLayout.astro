@@ -9,27 +9,49 @@ interface Props {
 }
 
 const {
-  title = 'Expande Inmobiliaria | Venta de Lotes en Lambayeque y Chiclayo',
-  description = 'Venta de terrenos y lotes en Lambayeque y Chiclayo desde S/18,500. Nuevo proyecto Expande de Lambayeque II — lotes para casa propia o inversión con título SUNARP. Consulta hoy por WhatsApp.',
+  title = 'Venta de Lotes en Lambayeque y Chiclayo | Expande Inmobiliaria',
+  description = 'Venta de lotes y terrenos en Lambayeque y Chiclayo desde S/18,500. Inmobiliaria con +10 años, título SUNARP. Lotes para casa propia o inversión. Nuevo proyecto jul. 2026.',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const jsonLd = {
+const siteUrl = Astro.site?.toString() ?? 'https://expandeinmobiliaria.com';
+const logoUrl = new URL(logo.src, Astro.site).toString();
+
+const jsonLdOrg = {
   '@context': 'https://schema.org',
   '@type': 'RealEstateAgent',
+  '@id': `${siteUrl}#organization`,
   name: 'Expande Inmobiliaria',
-  image: new URL(logo.src, Astro.site).toString(),
-  url: Astro.site?.toString(),
+  description:
+    'Inmobiliaria peruana con más de 10 años de experiencia en la venta de lotes y terrenos en Lambayeque y Chiclayo. Más de 1,000 lotes vendidos con títulos SUNARP.',
+  foundingDate: '2015',
+  image: logoUrl,
+  logo: logoUrl,
+  url: siteUrl,
   telephone: contact.phoneDirect.number,
   email: contact.email,
+  priceRange: 'S/18,500 – S/50,000',
+  keywords:
+    'venta de lotes en Lambayeque, inmobiliarias en Lambayeque, inmobiliarias en Chiclayo, lotes para casa propia, lotes para inversión, proyecto de lotes, terrenos en venta, venta de terrenos, terrenos en venta en Chiclayo, terrenos en Chiclayo, lotes en Chiclayo, venta de lotes',
+  areaServed: [
+    { '@type': 'City', name: 'Chiclayo' },
+    { '@type': 'City', name: 'Lambayeque' },
+  ],
   address: {
     '@type': 'PostalAddress',
     streetAddress: contact.office.address,
     addressLocality: 'Chiclayo',
     addressRegion: 'Lambayeque',
+    postalCode: '14001',
     addressCountry: 'PE',
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -6.7714,
+    longitude: -79.842,
+  },
+  hasMap: contact.office.mapUrl,
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -45,6 +67,16 @@ const jsonLd = {
     },
   ],
   sameAs: [contact.social.facebook, contact.social.tiktok],
+};
+
+const jsonLdWebSite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}#website`,
+  url: siteUrl,
+  name: 'Expande Inmobiliaria',
+  publisher: { '@id': `${siteUrl}#organization` },
+  inLanguage: 'es-PE',
 };
 ---
 
@@ -63,7 +95,7 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="Venta de lotes en Lambayeque, Inmobiliarias en Lambayeque, Inmobiliarias en Chiclayo, Lotes para inversión, Lotes para casa propia, Proyecto de lotes, Terrenos en venta"
+      content="venta de lotes en Lambayeque, inmobiliarias en Lambayeque, inmobiliarias en Chiclayo, lotes para casa propia, lotes para inversión, proyecto de lotes, terrenos en venta, venta de terrenos, terrenos en venta en Chiclayo, terrenos en Chiclayo, lotes en Chiclayo, venta de lotes"
     />
 
     <!-- Open Graph -->
@@ -71,7 +103,9 @@ const jsonLd = {
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(logo.src, Astro.site).toString()} />
+    <meta property="og:image" content={logoUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="es_PE" />
     <meta property="og:site_name" content="Expande Inmobiliaria" />
 
@@ -79,9 +113,10 @@ const jsonLd = {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(logo.src, Astro.site).toString()} />
+    <meta name="twitter:image" content={logoUrl} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLdOrg)} is:inline />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLdWebSite)} is:inline />
   </head>
   <body class="bg-base-100 text-base-content">
     <slot />
