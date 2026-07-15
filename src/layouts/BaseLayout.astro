@@ -103,9 +103,10 @@ const jsonLdWebSite = {
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={logoUrl} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image" content={new URL('/og-image.jpg', Astro.site).toString()} />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta property="og:image:alt" content="Vista aérea de Expande de Lambayeque II — proyecto de lotes en Lambayeque" />
     <meta property="og:locale" content="es_PE" />
     <meta property="og:site_name" content="Expande Inmobiliaria" />
 
@@ -113,7 +114,7 @@ const jsonLdWebSite = {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={logoUrl} />
+    <meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site).toString()} />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdOrg)} is:inline />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdWebSite)} is:inline />
