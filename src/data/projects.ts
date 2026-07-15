@@ -67,7 +67,7 @@ export const projects: Project[] = [
     statusLabel: 'Nuevo lanzamiento',
     description: 'La continuación de nuestro proyecto más exitoso. Número similar de lotes en condiciones similares.',
     mapUrl: 'https://maps.app.goo.gl/EyjbkMkscMYBYjZi8',
-    image: 'Foto-del-proyecto-02.jpeg',
+    image: 'drone-etapa-III.jpg',
   },
 ];
 
