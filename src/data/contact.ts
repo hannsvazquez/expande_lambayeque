@@ -18,6 +18,7 @@ export const contact = {
   social: {
     facebook: 'https://www.facebook.com/ExpandeInmobiliariacix',
     tiktok: 'https://www.tiktok.com/@expandeinmobiliaria.cix',
+    youtube: 'https://www.youtube.com/@expandeinmobiliaria.chiclayo',
   },
   office: {
     address: 'Calle Leoncio Prado 951, Chiclayo',
