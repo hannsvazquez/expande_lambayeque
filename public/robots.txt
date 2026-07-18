@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /etapa-III/
 
 Sitemap: https://expandeinmobiliaria.com/sitemap-index.xml
