@@ -1,16 +1,24 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import CTACamila from '../components/CTACamila.astro';
 import Footer from '../components/Footer.astro';
 import { contact } from '../data/contact';
 
-// TODO: Replace advisor placeholders once photos and names are provided
-// Add advisor photos to Photos_Expande/ and update this array
+import teamPhoto from '../../Photos_Expande/equipo-expande.jpg';
+import photoAlex from '../../Photos_Expande/asesor-alex-guevara.jpg';
+import photoAracely from '../../Photos_Expande/asesor-aracely-rumiche.jpg';
+import photoMartha from '../../Photos_Expande/asesor-martha-llontop.jpg';
+import photoWilmer from '../../Photos_Expande/asesor-wilmer-raimundo.jpg';
+import photoAna from '../../Photos_Expande/asesor-ana-balladares.jpg';
+
 const advisors = [
-  { name: 'Asesor Expande', role: 'Especialista en ventas', photo: null },
-  { name: 'Asesor Expande', role: 'Especialista en ventas', photo: null },
-  { name: 'Asesor Expande', role: 'Especialista en ventas', photo: null },
+  { name: 'Alex Guevara', role: 'Gerente Comercial', photo: photoAlex },
+  { name: 'Aracely Rumiche', role: 'Asesora Inmobiliaria', photo: photoAracely },
+  { name: 'Wilmer Raimundo', role: 'Asesor Inmobiliario', photo: photoWilmer },
+  { name: 'Martha Llontop', role: 'Asesora Inmobiliaria', photo: photoMartha },
+  { name: 'Ana Balladares', role: 'Asesora Inmobiliaria', photo: photoAna },
 ];
 
 const stats = [
@@ -59,6 +67,16 @@ const stats = [
             <p class="mt-6 font-body text-base text-base-content/75 md:text-lg">
               Desde el 2015 el equipo de Expande ha desarrollado más de 5 proyectos de lotización. Ofrecemos financiamiento directo con 0% de interés, lo que demuestra nuestro compromiso en brindar la oportunidad para que más familias puedan acceder al sueño de la casa propia o para aquellos inversionistas que buscan nuevas oportunidades para rentabilizar su capital en zonas con alta proyección de revalorización.
             </p>
+
+            <div class="mt-8 grid grid-cols-2 gap-4">
+              {stats.map((stat) => (
+                <div class="flex flex-col gap-1 rounded-box bg-base-200 p-5">
+                  <span class="font-heading text-3xl font-semibold text-primary">{stat.value}</span>
+                  <span class="font-body text-sm text-base-content/75">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
             <div class="mt-8 flex flex-wrap gap-3">
               <a href="#nuestro-equipo" class="btn btn-primary">Conoce nuestro equipo</a>
               <a
@@ -72,13 +90,15 @@ const stats = [
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            {stats.map((stat) => (
-              <div class="flex flex-col gap-1 rounded-box bg-base-200 p-6">
-                <span class="font-heading text-3xl font-semibold text-primary">{stat.value}</span>
-                <span class="font-body text-sm text-base-content/75">{stat.label}</span>
-              </div>
-            ))}
+          <div class="overflow-hidden rounded-box">
+            <Image
+              src={teamPhoto}
+              alt="Equipo de asesores de Expande Inmobiliaria en el lanzamiento del proyecto"
+              width={900}
+              height={600}
+              class="h-full w-full object-cover"
+              loading="eager"
+            />
           </div>
         </div>
       </div>
@@ -99,32 +119,26 @@ const stats = [
           Algunos de nuestros asesores top con los que puedes ponerte en contacto:
         </p>
 
-        <div class="grid gap-6 sm:grid-cols-3 md:gap-8">
+        <div class="grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 md:gap-6">
           {advisors.map((advisor) => (
-            <div class="flex flex-col items-center gap-4 rounded-box bg-base-100 p-6 text-center">
-              {advisor.photo ? (
-                <img
-                  src={advisor.photo}
-                  alt={`Foto de ${advisor.name}`}
-                  class="size-32 rounded-full object-cover"
-                  loading="lazy"
-                />
-              ) : (
-                <div class="flex size-32 items-center justify-center rounded-full bg-base-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="size-16 text-base-content/20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-                  </svg>
-                </div>
-              )}
+            <div class="flex flex-col items-center gap-4 rounded-box bg-base-100 p-5 text-center">
+              <Image
+                src={advisor.photo}
+                alt={`Foto de ${advisor.name}, ${advisor.role} en Expande Inmobiliaria`}
+                width={160}
+                height={160}
+                class="size-28 rounded-full object-cover object-top"
+                loading="lazy"
+              />
               <div>
-                <p class="font-heading text-base font-medium text-secondary">{advisor.name}</p>
-                <p class="font-body text-sm text-base-content/50">{advisor.role}</p>
+                <p class="font-heading text-sm font-semibold text-secondary">{advisor.name}</p>
+                <p class="font-body text-xs text-base-content/50">{advisor.role}</p>
               </div>
               <a
                 href={contact.whatsappCamila.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="btn btn-outline btn-primary btn-sm w-full"
+                class="btn btn-outline btn-primary btn-xs w-full"
               >
                 Contactar
               </a>
