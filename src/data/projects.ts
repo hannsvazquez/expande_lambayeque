@@ -59,8 +59,8 @@ export const projects: Project[] = [
     image: 'foto-proyecto-I.jpeg',
   },
   {
-    slug: 'expande-de-lambayeque-ii',
-    name: 'Expande de Lambayeque II',
+    slug: 'expande-de-lambayeque-iii',
+    name: 'Expande de Lambayeque III',
     location: 'Lambayeque',
     year: 'Jul. 2026',
     status: 'nuevo-lanzamiento',
