@@ -1,0 +1,198 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import CTACamila from '../components/CTACamila.astro';
+import Footer from '../components/Footer.astro';
+import { contact } from '../data/contact';
+
+import teamPhoto from '../../Photos_Expande/equipo-expande.jpg';
+import photoAlex from '../../Photos_Expande/asesor-alex-guevara.jpg';
+import photoAracely from '../../Photos_Expande/asesor-aracely-rumiche.jpg';
+import photoMartha from '../../Photos_Expande/asesor-martha-llontop.jpg';
+import photoWilmer from '../../Photos_Expande/asesor-wilmer-raimundo.jpg';
+import photoAna from '../../Photos_Expande/asesor-ana-balladares.jpg';
+
+const advisors = [
+  { name: 'Alex Guevara', role: 'Gerente Comercial', photo: photoAlex },
+  { name: 'Aracely Rumiche', role: 'Asesora Inmobiliaria', photo: photoAracely },
+  { name: 'Wilmer Raimundo', role: 'Asesor Inmobiliario', photo: photoWilmer },
+  { name: 'Martha Llontop', role: 'Asesora Inmobiliaria', photo: photoMartha },
+  { name: 'Ana Balladares', role: 'Asesora Inmobiliaria', photo: photoAna },
+];
+
+const stats = [
+  { value: '+10', label: 'años de trayectoria' },
+  { value: '+5', label: 'proyectos de lotización' },
+  { value: '+100', label: 'familias con lote propio' },
+  { value: '0%', label: 'interés en financiamiento' },
+];
+---
+
+<BaseLayout
+  title="Sobre Nosotros | Expande Inmobiliaria"
+  description="Especialistas en el desarrollo y comercialización de proyectos de lotización en la región Lambayeque. Brindamos asesoría personalizada para familias e inversionistas que quieren invertir en lotes para expansión urbana."
+>
+  <Navigation />
+
+  <main>
+    <!-- Page hero -->
+    <section class="bg-secondary py-16 md:py-24">
+      <div class="mx-auto max-w-7xl px-6 md:px-8">
+        <nav aria-label="Migas de pan">
+          <ol class="flex items-center gap-2 font-body text-sm text-white/50">
+            <li><a href="/" class="transition-colors hover:text-white">Inicio</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-white/75">Sobre Nosotros</li>
+          </ol>
+        </nav>
+        <h1 class="mt-6 font-heading text-4xl font-semibold text-white md:text-5xl lg:max-w-3xl">
+          Más de 10 años ayudando a familias e inversionistas a crecer en Lambayeque
+        </h1>
+        <p class="mt-4 max-w-2xl font-body text-base text-white/75 md:text-lg">
+          Especializados en proyectos de lotización en Lambayeque y Chiclayo desde 2015. Financiamiento directo, títulos SUNARP y asesoría personalizada para cada cliente.
+        </p>
+      </div>
+    </section>
+
+    <!-- Nuestra especialidad -->
+    <section class="bg-base-100 py-16 md:py-24 lg:py-32">
+      <div class="mx-auto max-w-7xl px-6 md:px-8">
+        <div class="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+          <div>
+            <span class="badge badge-outline badge-primary mb-4 font-body text-xs uppercase tracking-wide">Nuestra especialidad</span>
+            <h2 class="font-heading text-3xl font-semibold text-secondary md:text-4xl">
+              Financiamiento directo al 0% de interés para que tengas tu lote propio
+            </h2>
+            <p class="mt-6 font-body text-base text-base-content/75 md:text-lg">
+              Desde el 2015 el equipo de Expande ha desarrollado más de 5 proyectos de lotización. Ofrecemos financiamiento directo con 0% de interés, lo que demuestra nuestro compromiso en brindar la oportunidad para que más familias puedan acceder al sueño de la casa propia o para aquellos inversionistas que buscan nuevas oportunidades para rentabilizar su capital en zonas con alta proyección de revalorización.
+            </p>
+
+            <div class="mt-8 grid grid-cols-2 gap-4">
+              {stats.map((stat) => (
+                <div class="flex flex-col gap-1 rounded-box bg-base-200 p-5">
+                  <span class="font-heading text-3xl font-semibold text-primary">{stat.value}</span>
+                  <span class="font-body text-sm text-base-content/75">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#nuestro-equipo" class="btn btn-primary">Conoce nuestro equipo</a>
+              <a
+                href={contact.whatsappCamila.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline"
+              >
+                Contactar ahora
+              </a>
+            </div>
+          </div>
+
+          <div class="overflow-hidden rounded-box">
+            <Image
+              src={teamPhoto}
+              alt="Equipo de asesores de Expande Inmobiliaria en el lanzamiento del proyecto"
+              width={900}
+              height={600}
+              class="h-full w-full object-cover"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nuestro equipo -->
+    <section id="nuestro-equipo" class="bg-base-200 py-16 md:py-24 lg:py-32">
+      <div class="mx-auto max-w-7xl px-6 md:px-8">
+        <span class="badge badge-outline badge-primary mb-4 font-body text-xs uppercase tracking-wide">Nuestro equipo</span>
+        <h2 class="mb-4 font-heading text-3xl font-semibold text-secondary md:text-4xl">
+          Asesores capacitados para guiarte en cada paso
+        </h2>
+        <p class="mb-12 max-w-2xl font-body text-base text-base-content/75 md:text-lg">
+          Expande está conformado por un equipo altamente capacitado para brindarte la orientación que necesitas para tomar la mejor decisión de inversión según tus necesidades actuales. Ya sea para construir tu primera casa, futuro local comercial o como inversión estratégica.
+        </p>
+
+        <p class="mb-8 font-body text-sm font-medium uppercase tracking-wide text-base-content/60">
+          Algunos de nuestros asesores top con los que puedes ponerte en contacto:
+        </p>
+
+        <div class="grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 md:gap-6">
+          {advisors.map((advisor) => (
+            <div class="flex flex-col items-center gap-4 rounded-box bg-base-100 p-5 text-center">
+              <Image
+                src={advisor.photo}
+                alt={`Foto de ${advisor.name}, ${advisor.role} en Expande Inmobiliaria`}
+                width={160}
+                height={160}
+                class="size-28 rounded-full object-cover object-top"
+                loading="lazy"
+              />
+              <div>
+                <p class="font-heading text-sm font-semibold text-secondary">{advisor.name}</p>
+                <p class="font-body text-xs text-base-content/50">{advisor.role}</p>
+              </div>
+              <a
+                href={contact.whatsappCamila.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline btn-primary btn-xs w-full"
+              >
+                Contactar
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Nuestras oficinas -->
+    <section class="bg-base-100 py-16 md:py-24 lg:py-32">
+      <div class="mx-auto max-w-7xl px-6 md:px-8">
+        <span class="badge badge-outline badge-primary mb-4 font-body text-xs uppercase tracking-wide">Visítanos</span>
+        <h2 class="mb-4 font-heading text-3xl font-semibold text-secondary md:text-4xl">
+          Nuestras oficinas
+        </h2>
+        <p class="mb-10 max-w-2xl font-body text-base text-base-content/75 md:text-lg">
+          ¿Aún tienes dudas? Puedes visitarnos en nuestras oficinas presenciales en el centro de Chiclayo. Ven y conoce más de nuestros proyectos de Lunes a Sábado de 9 am a 6 pm.
+        </p>
+
+        <div class="overflow-hidden rounded-box">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.006004547419!2d-79.83761419999999!3d-6.7691206!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x904cef961df9307f%3A0xfa341ec78305622a!2sExpande%20Inmobiliaria%20SAC!5e0!3m2!1ses!2spe!4v1784738426594!5m2!1ses!2spe"
+            class="h-72 w-full md:h-[450px]"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="Mapa de la oficina de Expande Inmobiliaria en Chiclayo"
+          ></iframe>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-3 font-body text-sm text-base-content/75 sm:flex-row sm:gap-8">
+          <span>
+            <strong class="text-secondary">Dirección:</strong> {contact.office.address}
+          </span>
+          <span>
+            <strong class="text-secondary">Horario:</strong> Lun–Vie 9am–6pm · Sáb 9am–1pm
+          </span>
+          <a
+            href={contact.office.mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-medium text-primary hover:underline"
+          >
+            Ver en Google Maps
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Camila -->
+    <CTACamila />
+  </main>
+
+  <Footer />
+</BaseLayout>

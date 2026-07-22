@@ -1,0 +1,76 @@
+---
+// TODO: Replace image URLs with local files in Photos_Expande/ once provided
+const places = [
+  {
+    category: 'Centros comerciales',
+    name: 'Mall Aventura',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ6zRrZen7305fZ05942V0eguc3S62NXjFu23wJi6gZyPIG55n0sbVeeI9&s=10',
+    alt: 'Mall Aventura Chiclayo',
+  },
+  {
+    category: 'Universidades',
+    name: 'UNPRG',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM9R34VkFNiilXlDg0iD-x1UnNaWtiGlwy2DmpozI7NUo4IbyVv56QkD0U&s=10',
+    alt: 'Universidad Nacional Pedro Ruiz Gallo Lambayeque',
+  },
+  {
+    category: 'Centros de Salud',
+    name: 'Hospital Regional',
+    image: 'https://imgmedia.larepublica.pe/1000x590/larepublica/migration/images/LFT2BDU64ZEW5K6UEF4F2WVMIA.webp',
+    alt: 'Hospital Regional de Lambayeque',
+  },
+  {
+    category: 'Cerca al mar',
+    name: 'Playa Naylamp',
+    image: 'https://www.actualidadambiental.pe/wp-content/uploads/2026/07/LA-HERRADURA-JAVIER-LARREA.webp',
+    alt: 'Playa Naylamp Lambayeque',
+  },
+];
+---
+
+<section class="bg-base-200 py-16 md:py-24 lg:py-32">
+  <div class="mx-auto max-w-7xl px-6 md:px-8">
+    <div class="mb-12 flex flex-col gap-4 md:mb-16">
+      <span class="badge badge-outline badge-primary w-fit font-body text-xs uppercase tracking-wide">Ubicación privilegiada</span>
+      <h2 class="font-heading text-3xl font-semibold text-secondary md:text-4xl">
+        Principales lugares y atractivos
+      </h2>
+      <p class="max-w-2xl font-body text-base text-base-content/75 md:text-lg">
+        Nuestro proyecto se encuentra a sólo 30 min de los principales lugares y atractivos de la región.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+      {places.map((place) => (
+        <div class="place-card overflow-hidden bg-base-100">
+          <div class="place-card-img">
+            <img
+              src={place.image}
+              alt={place.alt}
+              loading="lazy"
+              class="h-full w-full object-cover"
+            />
+          </div>
+          <div class="p-4">
+            <span class="font-body text-xs uppercase tracking-wide text-base-content/50">{place.category}</span>
+            <p class="mt-1 font-heading text-base font-medium text-secondary">{place.name}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .place-card {
+    border: 0.5px solid rgba(100, 100, 100, 0.25);
+    border-radius: 24px;
+  }
+  .place-card-img {
+    height: 160px;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) {
+    .place-card-img { height: 210px; }
+  }
+</style>

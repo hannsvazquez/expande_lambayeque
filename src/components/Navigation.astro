@@ -3,12 +3,14 @@ import { Menu } from '@lucide/astro';
 import Logo from './Logo.astro';
 import { contact } from '../data/contact';
 
+const isHome = Astro.url.pathname === '/';
+
 const links = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Proyectos', href: '#proyectos' },
-  { label: 'Oficina', href: '#oficina' },
-  { label: 'Asistente Virtual', href: '#camila' },
+  { label: 'Inicio', href: isHome ? '#inicio' : '/' },
+  { label: 'Nosotros', href: '/sobre-nosotros' },
+  { label: 'Proyectos', href: isHome ? '#proyectos' : '/#proyectos' },
+  { label: 'Oficina', href: isHome ? '#oficina' : '/#oficina' },
+  { label: 'Asistente Virtual', href: isHome ? '#camila' : '/#camila' },
 ];
 ---
 
