@@ -1,0 +1,30 @@
+---
+const text = 'Nuevos lotes disponibles en nuestra Etapa III desde S/299 mensuales o S/18,000 al contado';
+const items = Array.from({ length: 8 }, () => text);
+---
+
+<div class="overflow-hidden bg-accent border-b border-black/5" role="note" aria-label="Anuncio: nuevos lotes disponibles">
+  <div class="marquee-track flex py-2.5">
+    {items.map((item) => (
+      <span class="shrink-0 inline-flex items-center gap-4 px-8 font-body text-sm font-semibold text-accent-content">
+        {item}
+        <span class="opacity-30" aria-hidden="true">•</span>
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    width: max-content;
+    animation: marquee-scroll 60s linear infinite;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation-play-state: paused; }
+  }
+</style>
