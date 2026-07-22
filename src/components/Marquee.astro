@@ -3,12 +3,12 @@ const text = 'Nuevos lotes disponibles en nuestra Etapa III desde S/299 mensuale
 const items = Array.from({ length: 8 }, () => text);
 ---
 
-<div class="overflow-hidden bg-accent border-b border-black/5" role="note" aria-label="Anuncio: nuevos lotes disponibles">
+<div class="overflow-hidden border-b border-black/10" style="background-color: #f94144;" role="note" aria-label="Anuncio: nuevos lotes disponibles">
   <div class="marquee-track flex py-2.5">
     {items.map((item) => (
-      <span class="shrink-0 inline-flex items-center gap-4 px-8 font-body text-sm font-semibold text-accent-content">
+      <span class="shrink-0 inline-flex items-center gap-4 px-8 font-body text-sm font-semibold text-white">
         {item}
-        <span class="opacity-30" aria-hidden="true">•</span>
+        <span class="opacity-40 text-white" aria-hidden="true">•</span>
       </span>
     ))}
   </div>
