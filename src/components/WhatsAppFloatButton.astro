@@ -1,6 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { contact } from '../data/contact';
-import camilaPhoto from '../../Photos_Expande/Camila-C.png';
+import camilaPhoto from '../../Photos_Expande/Camila-asistente-virtual.png';
 ---
 
 <div id="whatsapp-widget" class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
@@ -29,9 +30,12 @@ import camilaPhoto from '../../Photos_Expande/Camila-C.png';
     aria-label="Conversar por WhatsApp con Camila"
     class="relative block size-16 rounded-full bg-success p-[3px] shadow-lg hover:scale-105 transition-transform cursor-pointer"
   >
-    <img
-      src={camilaPhoto.src}
+    <Image
+      src={camilaPhoto}
       alt="Camila — Asistente virtual de Expande"
+      width={128}
+      height={128}
+      format="webp"
       class="size-full rounded-full object-cover"
       loading="lazy"
     />
