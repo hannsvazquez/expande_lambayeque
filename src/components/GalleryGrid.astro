@@ -1,0 +1,296 @@
+---
+import { ArrowUpDown, ChevronLeft, ChevronRight, X, ZoomIn } from '@lucide/astro';
+import { formatUploadedAt, urlFor, type GalleryImage } from '../lib/sanity';
+
+interface Props {
+  images: GalleryImage[];
+  /** How many photos render before "Ver más". */
+  pageSize?: number;
+}
+
+const { images, pageSize = 12 } = Astro.props;
+
+const tabs = [
+  { label: 'Diseños', value: 'disenos' },
+  { label: 'Fotos reales', value: 'fotos-reales' },
+] as const;
+
+// Tab order follows the design, but the gallery opens on Fotos reales.
+const defaultCategory = 'fotos-reales';
+
+// Photos arrive newest-first from GROQ; the sort toggle reverses the DOM order client-side.
+const cards = images.map((photo, index) => ({
+  ...photo,
+  index,
+  src: urlFor(photo.image).width(800).height(800).fit('crop').auto('format').url(),
+  srcset: [400, 800, 1200]
+    .map((w) => `${urlFor(photo.image).width(w).height(w).fit('crop').auto('format').url()} ${w}w`)
+    .join(', '),
+  formattedDate: formatUploadedAt(photo.uploadedAt),
+  // Lightbox source: `fit('max')` keeps the original aspect ratio instead of the square grid crop.
+  full: urlFor(photo.image).width(1800).fit('max').auto('format').url(),
+}));
+---
+
+<div
+  class="mx-auto max-w-7xl px-6 md:px-8"
+  data-gallery
+  data-page-size={pageSize}
+>
+  <!-- Tabs + sort control -->
+  <div class="mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-center md:justify-between">
+    <div role="tablist" class="tabs tabs-box grid grid-cols-2 md:flex md:w-auto">
+      {tabs.map((tab) => (
+        <button
+          type="button"
+          role="tab"
+          class:list={['tab font-body text-sm font-medium', tab.value === defaultCategory && 'tab-active']}
+          data-filter={tab.value}
+          data-default={tab.value === defaultCategory ? '' : undefined}
+          aria-selected={tab.value === defaultCategory ? 'true' : 'false'}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="font-body text-sm text-base-content/60">Ordenar por</span>
+      <button
+        type="button"
+        class="btn btn-outline btn-sm gap-2"
+        data-sort-toggle
+        data-order="desc"
+        aria-label="Cambiar el orden de las fotos"
+      >
+        <ArrowUpDown class="size-4" />
+        <span data-sort-label>Más recientes</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Photo grid -->
+  <div class="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6" data-gallery-grid>
+    {cards.map((photo) => (
+      <figure
+        class="flex flex-col gap-3"
+        data-photo
+        data-category={photo.category}
+        data-project={photo.project ?? ''}
+        data-full={photo.full}
+        data-label={photo.labelTitle}
+        data-date={photo.formattedDate}
+        data-alt={photo.alt}
+        style={`order:${photo.index}`}
+      >
+        <button
+          type="button"
+          class="group relative block cursor-zoom-in overflow-hidden rounded-box bg-base-200"
+          data-zoom
+          aria-label={`Ampliar foto: ${photo.labelTitle}`}
+        >
+          <img
+            src={photo.src}
+            srcset={photo.srcset}
+            sizes="(min-width: 768px) 33vw, 50vw"
+            alt={photo.alt}
+            width={800}
+            height={800}
+            loading="lazy"
+            decoding="async"
+            style={photo.image.asset.metadata.lqip
+              ? `background-image:url(${photo.image.asset.metadata.lqip});background-size:cover`
+              : undefined}
+            class="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <span
+            class="pointer-events-none absolute inset-0 flex items-center justify-center bg-secondary/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+            aria-hidden="true"
+          >
+            <ZoomIn class="size-8 text-white" />
+          </span>
+        </button>
+        <figcaption class="flex flex-col gap-0.5 font-body text-sm md:flex-row md:items-center md:justify-between md:gap-4">
+          <span class="font-medium text-secondary">{photo.labelTitle}</span>
+          <time datetime={photo.uploadedAt} class="text-base-content/50">{photo.formattedDate}</time>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <p class="mt-10 text-center font-body text-base-content/60" data-gallery-empty hidden>
+    Aún no hay fotos en esta categoría.
+  </p>
+
+  <div class="mt-10 flex justify-center">
+    <button type="button" class="btn btn-outline btn-primary" data-load-more>Ver más</button>
+  </div>
+
+  <!-- Lightbox. Native <dialog> gives focus trapping and Esc-to-close for free. -->
+  <dialog class="modal modal-bottom sm:modal-middle" data-lightbox aria-label="Foto ampliada">
+    <div class="modal-box flex max-h-[92vh] w-full max-w-5xl flex-col gap-4 bg-base-100 p-4 md:p-6">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex flex-col gap-0.5">
+          <p class="font-heading text-lg font-semibold text-secondary" data-lightbox-label></p>
+          <p class="font-body text-sm text-base-content/50" data-lightbox-date></p>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm btn-square" data-lightbox-close aria-label="Cerrar">
+          <X class="size-5" />
+        </button>
+      </div>
+
+      <div class="relative flex min-h-0 flex-1 items-center justify-center">
+        <img
+          data-lightbox-image
+          src=""
+          alt=""
+          class="max-h-[70vh] w-auto max-w-full rounded-box object-contain"
+        />
+
+        <button
+          type="button"
+          class="btn btn-circle btn-sm absolute left-2 md:btn-md"
+          data-lightbox-prev
+          aria-label="Foto anterior"
+        >
+          <ChevronLeft class="size-5" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-circle btn-sm absolute right-2 md:btn-md"
+          data-lightbox-next
+          aria-label="Foto siguiente"
+        >
+          <ChevronRight class="size-5" />
+        </button>
+      </div>
+
+      <p class="text-center font-body text-xs text-base-content/40" data-lightbox-counter></p>
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+      <button aria-label="Cerrar">Cerrar</button>
+    </form>
+  </dialog>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-gallery]');
+
+  if (root) {
+    const grid = root.querySelector<HTMLElement>('[data-gallery-grid]')!;
+    const photos = Array.from(root.querySelectorAll<HTMLElement>('[data-photo]'));
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const sortToggle = root.querySelector<HTMLButtonElement>('[data-sort-toggle]')!;
+    const sortLabel = root.querySelector<HTMLElement>('[data-sort-label]')!;
+    const loadMore = root.querySelector<HTMLButtonElement>('[data-load-more]')!;
+    const empty = root.querySelector<HTMLElement>('[data-gallery-empty]')!;
+    const pageSize = Number(root.dataset.pageSize) || 12;
+
+    const lightbox = root.querySelector<HTMLDialogElement>('[data-lightbox]')!;
+    const lightboxImage = root.querySelector<HTMLImageElement>('[data-lightbox-image]')!;
+    const lightboxLabel = root.querySelector<HTMLElement>('[data-lightbox-label]')!;
+    const lightboxDate = root.querySelector<HTMLElement>('[data-lightbox-date]')!;
+    const lightboxCounter = root.querySelector<HTMLElement>('[data-lightbox-counter]')!;
+    const lightboxPrev = root.querySelector<HTMLButtonElement>('[data-lightbox-prev]')!;
+    const lightboxNext = root.querySelector<HTMLButtonElement>('[data-lightbox-next]')!;
+    const lightboxClose = root.querySelector<HTMLButtonElement>('[data-lightbox-close]')!;
+
+    const defaultTab = root.querySelector<HTMLButtonElement>('[data-filter][data-default]');
+    let category = (defaultTab ?? tabs[0])?.dataset.filter ?? '';
+    let order: 'desc' | 'asc' = 'desc';
+    let visible = pageSize;
+
+    /** Photos currently on screen, in the order the visitor sees them. Drives lightbox prev/next. */
+    let shown: HTMLElement[] = [];
+    let activeIndex = 0;
+
+    function render() {
+      const matching = photos.filter((photo) => photo.dataset.category === category);
+
+      photos.forEach((photo) => {
+        photo.hidden = true;
+      });
+
+      // `order` is the newest-first index baked in at build time; flip it for oldest-first.
+      matching.forEach((photo, position) => {
+        const rank = order === 'desc' ? position : matching.length - 1 - position;
+        photo.style.order = String(rank);
+        photo.hidden = rank >= visible;
+      });
+
+      shown = matching.filter((photo) => !photo.hidden).sort(
+        (a, b) => Number(a.style.order) - Number(b.style.order)
+      );
+
+      empty.hidden = matching.length > 0;
+      loadMore.hidden = matching.length <= visible;
+      grid.hidden = matching.length === 0;
+    }
+
+    function showPhoto(index: number) {
+      if (shown.length === 0) return;
+      // Wrap around so the arrows never dead-end.
+      activeIndex = (index + shown.length) % shown.length;
+      const photo = shown[activeIndex];
+
+      lightboxImage.src = photo.dataset.full!;
+      lightboxImage.alt = photo.dataset.alt!;
+      lightboxLabel.textContent = photo.dataset.label!;
+      lightboxDate.textContent = photo.dataset.date!;
+      lightboxCounter.textContent = `${activeIndex + 1} de ${shown.length}`;
+
+      const single = shown.length < 2;
+      lightboxPrev.hidden = single;
+      lightboxNext.hidden = single;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        category = tab.dataset.filter!;
+        visible = pageSize;
+        tabs.forEach((other) => {
+          const active = other === tab;
+          other.classList.toggle('tab-active', active);
+          other.setAttribute('aria-selected', String(active));
+        });
+        render();
+      });
+    });
+
+    sortToggle.addEventListener('click', () => {
+      order = order === 'desc' ? 'asc' : 'desc';
+      sortToggle.dataset.order = order;
+      sortLabel.textContent = order === 'desc' ? 'Más recientes' : 'Más antiguas';
+      render();
+    });
+
+    loadMore.addEventListener('click', () => {
+      visible += pageSize;
+      render();
+    });
+
+    photos.forEach((photo) => {
+      photo.querySelector<HTMLButtonElement>('[data-zoom]')!.addEventListener('click', () => {
+        showPhoto(shown.indexOf(photo));
+        lightbox.showModal();
+      });
+    });
+
+    lightboxPrev.addEventListener('click', () => showPhoto(activeIndex - 1));
+    lightboxNext.addEventListener('click', () => showPhoto(activeIndex + 1));
+    lightboxClose.addEventListener('click', () => lightbox.close());
+
+    lightbox.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') showPhoto(activeIndex - 1);
+      if (event.key === 'ArrowRight') showPhoto(activeIndex + 1);
+    });
+
+    // Return focus to the thumbnail the visitor opened, so keyboard nav keeps its place.
+    lightbox.addEventListener('close', () => {
+      shown[activeIndex]?.querySelector<HTMLButtonElement>('[data-zoom]')?.focus();
+    });
+
+    render();
+  }
+</script>
