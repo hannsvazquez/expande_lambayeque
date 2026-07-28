@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import GalleryGrid from '../components/GalleryGrid.astro';
+import CTACamila from '../components/CTACamila.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloatButton from '../components/WhatsAppFloatButton.astro';
+import { getGalleryImages } from '../lib/sanity';
+
+import heroBackground from '../../Photos_Expande/drone-etapa-III-panoramica.jpg';
+
+const images = await getGalleryImages();
+---
+
+<BaseLayout
+  title="Galería de Proyectos | Expande Inmobiliaria"
+  description="Mira los diseños y las fotos reales de nuestros proyectos de lotización en Lambayeque y Chiclayo: avances de obra, habilitación de servicios y planos del proyecto."
+>
+  <Navigation />
+
+  <main>
+    <!-- Header -->
+    <section class="relative overflow-hidden bg-secondary py-16 md:py-24">
+      <Image
+        src={heroBackground}
+        alt=""
+        width={1600}
+        height={900}
+        loading="eager"
+        class="absolute inset-0 size-full object-cover"
+        aria-hidden="true"
+      />
+      <div class="absolute inset-0 bg-secondary/85" aria-hidden="true"></div>
+
+      <div class="relative mx-auto max-w-7xl px-6 md:px-8">
+        <nav aria-label="Migas de pan">
+          <ol class="flex items-center gap-2 font-body text-sm text-white/50">
+            <li><a href="/" class="transition-colors hover:text-white">Inicio</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-white/75">Galería de Proyectos</li>
+          </ol>
+        </nav>
+        <h1 class="mt-6 font-heading text-4xl font-semibold text-white md:text-5xl lg:max-w-3xl">
+          Galería de nuestros proyectos de lotes en Lambayeque
+        </h1>
+        <p class="mt-4 max-w-2xl font-body text-base text-white/75 md:text-lg">
+          Revisa los diseños del proyecto y las fotos reales de los avances de obra: calles compactadas, postes de luz, puntos de agua y las familias que ya tienen su lote propio.
+        </p>
+      </div>
+    </section>
+
+    <!-- Galería -->
+    <section class="bg-base-100 py-12 md:py-16 lg:py-20">
+      {images.length > 0 ? (
+        <GalleryGrid images={images} />
+      ) : (
+        <div class="mx-auto max-w-7xl px-6 text-center md:px-8">
+          <p class="font-body text-base-content/60">
+            Estamos preparando la galería. Vuelve pronto para ver los avances del proyecto.
+          </p>
+        </div>
+      )}
+    </section>
+
+    <CTACamila />
+  </main>
+
+  <Footer />
+  <WhatsAppFloatButton />
+</BaseLayout>
